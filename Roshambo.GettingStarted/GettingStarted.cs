@@ -33,14 +33,17 @@ namespace Roshambo.GettingStarted
         /// <param name="cancellationToken">Canceled when Service Fabric needs to shut down this service instance.</param>
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {
-            // TODO: Replace the following sample code with your own logic 
-            //       or remove this RunAsync override if it's not needed in your service.
-
-            long iterations = 0;
+            var iterations = 0;
+            var game = new GameEngine();
 
             while (true)
             {
                 cancellationToken.ThrowIfCancellationRequested();
+
+
+                (var computer1, var computer2, var result) = game.PlayRound();
+                ServiceEventSource.Current.ServiceMessage(this.Context, "{0} against {1} => {2}",
+                    computer1, computer2, result);
 
                 ServiceEventSource.Current.ServiceMessage(this.Context, "Working-{0}", ++iterations);
 
