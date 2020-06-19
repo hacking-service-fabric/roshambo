@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Roshambo.App", "Roshambo.App\Roshambo.App.sfproj", "{2998CDEB-D6A3-4766-AA24-3EC9C4042C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.GettingStarted", "Roshambo.GettingStarted\Roshambo.GettingStarted.csproj", "{D464AF12-314A-44E1-BA2D-3891DDAF14BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.GettingStarted", "Roshambo.GettingStarted\Roshambo.GettingStarted.csproj", "{D464AF12-314A-44E1-BA2D-3891DDAF14BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.UI", "Roshambo.UI\Roshambo.UI.csproj", "{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|x64.ActiveCfg = Release|Any CPU
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|x64.Build.0 = Release|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|x64.Build.0 = Debug|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|x64.ActiveCfg = Release|Any CPU
+		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
