@@ -12,4 +12,6 @@
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="3.3.654" />
   </ItemGroup>
 
+  <Import Project="..\Roshambo.Shared\Roshambo.Shared.projitems" Label="Shared" />
+
 </Project>

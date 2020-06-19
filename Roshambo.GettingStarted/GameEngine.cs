@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Roshambo.Shared;
+using System;
 
 namespace Roshambo.GettingStarted
 {

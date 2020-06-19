@@ -7,9 +7,16 @@ Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "Roshambo.App", "Roshambo.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.GettingStarted", "Roshambo.GettingStarted\Roshambo.GettingStarted.csproj", "{D464AF12-314A-44E1-BA2D-3891DDAF14BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.UI", "Roshambo.UI\Roshambo.UI.csproj", "{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Roshambo.Shared", "Roshambo.Shared\Roshambo.Shared.shproj", "{F569A546-2548-4552-AA35-5A44A6AC4A30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.UI", "Roshambo.UI\Roshambo.UI.csproj", "{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Roshambo.Shared\Roshambo.Shared.projitems*{c1ce500a-9e2f-4ed1-9e0c-556df2f0a8d4}*SharedItemsImports = 5
+		Roshambo.Shared\Roshambo.Shared.projitems*{d464af12-314a-44e1-ba2d-3891ddaf14bd}*SharedItemsImports = 5
+		Roshambo.Shared\Roshambo.Shared.projitems*{f569a546-2548-4552-aa35-5a44a6ac4a30}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -33,14 +40,14 @@ Global
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|x64.ActiveCfg = Release|Any CPU
 		{D464AF12-314A-44E1-BA2D-3891DDAF14BD}.Release|x64.Build.0 = Release|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Debug|x64.Build.0 = Debug|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|x64.ActiveCfg = Release|Any CPU
-		{BEA74C2B-6A10-42F4-8B87-9DCF9A587F99}.Release|x64.Build.0 = Release|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Debug|x64.Build.0 = Debug|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|x64.ActiveCfg = Release|Any CPU
+		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

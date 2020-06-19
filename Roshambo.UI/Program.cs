@@ -11,7 +11,7 @@ namespace Roshambo.UI
         /// <summary>
         /// This is the entry point of the service host process.
         /// </summary>
-        private static async Task Main()
+        private static void Main()
         {
             try
             {
@@ -20,8 +20,8 @@ namespace Roshambo.UI
                 // When Service Fabric creates an instance of this service type,
                 // an instance of the class is created in this host process.
 
-                await ServiceRuntime.RegisterServiceAsync("Roshambo.UIType",
-                    context => new UI(context));
+                ServiceRuntime.RegisterServiceAsync("Roshambo.UIType",
+                    context => new UI(context)).GetAwaiter().GetResult();
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(UI).Name);
 
