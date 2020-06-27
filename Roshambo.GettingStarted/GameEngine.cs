@@ -8,16 +8,18 @@ namespace Roshambo.GettingStarted
         private static readonly Random _random = new Random();
 
         public (GameOptions Computer1, GameOptions Computer2, string Winner) PlayRound()
-        {
-            var computer1 = (GameOptions) _random.Next(0, 3);
-            var computer2 = (GameOptions) _random.Next(0, 3);
+            =>PlayRound((GameOptions) _random.Next(0, 3));
 
-            if (CheckIfTied(computer1, computer2))
+        public (GameOptions Computer1, GameOptions Computer2, string Winner) PlayRound(GameOptions player)
+        {
+            var computer2 = (GameOptions)_random.Next(0, 3);
+
+            if (CheckIfTied(player, computer2))
             {
-                return (computer1, computer2, "Tie");
+                return (player, computer2, "Tie");
             }
 
-            return (computer1, computer2, CheckIfWon(computer1, computer2)
+            return (player, computer2, CheckIfWon(player, computer2)
                 ? "Computer 1"
                 : "Computer 2");
         }
