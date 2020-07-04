@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.GettingStarted", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Roshambo.Shared", "Roshambo.Shared\Roshambo.Shared.shproj", "{F569A546-2548-4552-AA35-5A44A6AC4A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.UI", "Roshambo.UI\Roshambo.UI.csproj", "{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.UI", "Roshambo.UI\Roshambo.UI.csproj", "{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.Game", "Roshambo.Game\Roshambo.Game.csproj", "{6192B240-3FDD-499A-950D-96BA9B7DA978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.PlayerActor", "Roshambo.PlayerActor\Roshambo.PlayerActor.csproj", "{836FA664-AE73-4D9F-A429-2FA8A26B36A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.PlayerActor.Interfaces", "Roshambo.PlayerActor.Interfaces\Roshambo.PlayerActor.Interfaces.csproj", "{63CA51BC-C850-44DF-B74B-514D708756F2}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -48,6 +54,30 @@ Global
 		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|x64.ActiveCfg = Release|Any CPU
 		{C1CE500A-9E2F-4ED1-9E0C-556DF2F0A8D4}.Release|x64.Build.0 = Release|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Debug|x64.Build.0 = Debug|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Release|x64.ActiveCfg = Release|Any CPU
+		{6192B240-3FDD-499A-950D-96BA9B7DA978}.Release|x64.Build.0 = Release|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{836FA664-AE73-4D9F-A429-2FA8A26B36A8}.Release|x64.Build.0 = Release|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{63CA51BC-C850-44DF-B74B-514D708756F2}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
