@@ -12,6 +12,10 @@
     <PackageReference Include="Microsoft.ServiceFabric.AspNetCore.Kestrel" Version="3.4.677" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Roshambo.PlayerActor.Interfaces\Roshambo.PlayerActor.Interfaces.csproj" />
+  </ItemGroup>
+
   <Import Project="..\Roshambo.Shared\Roshambo.Shared.projitems" Label="Shared" />
 
 </Project>
