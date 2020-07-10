@@ -1,23 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Fabric;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.ServiceFabric.Data;
-using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
-using Microsoft.Extensions.DependencyInjection;
+using Roshambo.GettingStarted.Interfaces;
 
 namespace Roshambo.GettingStarted
 {
+    using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+
     /// <summary>
     /// An instance of this class is created for each service instance by the Service Fabric runtime.
     /// </summary>
-    internal sealed class GettingStarted : StatelessService
+    internal sealed class GettingStarted : StatelessService, IGettingStartedService
     {
         public GettingStarted(StatelessServiceContext context)
             : base(context)
@@ -29,24 +26,7 @@ namespace Roshambo.GettingStarted
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            yield return new ServiceInstanceListener(serviceContext =>
-                new KestrelCommunicationListener(
-                    serviceContext,
-                    (url, listener) =>
-                    {
-                        ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
-
-                        return new WebHostBuilder()
-                            .UseKestrel()
-                            .ConfigureServices(
-                                services => services
-                                    .AddSingleton(serviceContext))
-                            .UseContentRoot(Directory.GetCurrentDirectory())
-                            .UseStartup<GameListener>()
-                            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.UseUniqueServiceUrl)
-                            .UseUrls(url)
-                            .Build();
-                    }));
+            return this.CreateServiceRemotingInstanceListeners();
         }
 
         /// <summary>
@@ -71,6 +51,13 @@ namespace Roshambo.GettingStarted
 
                 await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
             }
+        }
+
+        public Task DoSomething()
+        {
+            ServiceEventSource.Current.ServiceDidSomething();
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Roshambo.GettingStarted.Interfaces;
 using Roshambo.PlayerActor.Interfaces;
 using Roshambo.Shared;
 
@@ -30,6 +32,17 @@ namespace Roshambo.UI.Controllers
                 YouPlayed = turn.ToString(),
                 ActorSaid = ((GameOptions)count).ToString()
             });
+        }
+
+        [HttpPost, Route("Try")]
+        public async Task<IActionResult> Try()
+        {
+            var service = ServiceProxy.Create<IGettingStartedService>(
+                new Uri("fabric:/Roshambo.App/Roshambo.GettingStarted"));
+
+            await service.DoSomething();
+
+            return Ok();
         }
     }
 }

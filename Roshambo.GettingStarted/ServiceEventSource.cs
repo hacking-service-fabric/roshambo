@@ -145,9 +145,16 @@ internal sealed class ServiceEventSource : EventSource
     {
         WriteEvent(ServiceRequestStopEventId, requestTypeName, exception);
     }
-    #endregion
 
-    #region Private methods
+    private const int ServiceDidSomethingEventId = 7;
+    [Event(ServiceDidSomethingEventId, Level = EventLevel.Informational, Message = "Service was asked to do something, and did it", Keywords = Keywords.Requests)]
+    public void ServiceDidSomething()
+    {
+        WriteEvent(ServiceRequestStopEventId);
+    }
+        #endregion
+
+        #region Private methods
 #if UNSAFE
         private int SizeInBytes(string s)
         {
@@ -161,6 +168,6 @@ internal sealed class ServiceEventSource : EventSource
             }
         }
 #endif
-    #endregion
-}
+        #endregion
+    }
 }
