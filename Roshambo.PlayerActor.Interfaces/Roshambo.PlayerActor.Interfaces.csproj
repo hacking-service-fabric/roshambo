@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Actors" Version="3.4.677" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Roshambo.GettingStarted.Interfaces\Roshambo.GettingStarted.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-﻿using Roshambo.Shared;
+﻿using Roshambo.GettingStarted.Interfaces;
 using System;
 
 namespace Roshambo.GettingStarted
@@ -7,21 +7,29 @@ namespace Roshambo.GettingStarted
     {
         private static readonly Random _random = new Random();
 
-        public (GameOptions Computer1, GameOptions Computer2, string Winner) PlayRound()
-            =>PlayRound((GameOptions) _random.Next(0, 3));
+        public GameResult PlayRound()
+            => PlayRound((GameOptions) _random.Next(0, 3));
 
-        public (GameOptions Computer1, GameOptions Computer2, string Winner) PlayRound(GameOptions player)
+        public GameResult PlayRound(GameOptions player)
         {
-            var computer2 = (GameOptions)_random.Next(0, 3);
-
-            if (CheckIfTied(player, computer2))
+            var result = new GameResult
             {
-                return (player, computer2, "Tie");
+                PlayerOption = player,
+                ComputerOption = (GameOptions) _random.Next(0, 3)
+            };
+
+            if (CheckIfTied(result.PlayerOption, result.ComputerOption))
+            {
+                result.Result = WinOptions.Tied;
+            }
+            else
+            {
+                result.Result = CheckIfWon(result.PlayerOption, result.ComputerOption)
+                    ? WinOptions.Won
+                    : WinOptions.Lost;
             }
 
-            return (player, computer2, CheckIfWon(player, computer2)
-                ? "Computer 1"
-                : "Computer 2");
+            return result;
         }
 
         static bool CheckIfTied(GameOptions userPlayed, GameOptions computerPlayed)

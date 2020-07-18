@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Remoting.FabricTransport;
 using Microsoft.ServiceFabric.Services.Remoting;
+using Roshambo.GettingStarted.Interfaces;
 
 [assembly: FabricTransportActorRemotingProvider(RemotingListenerVersion = RemotingListenerVersion.V2_1, RemotingClientVersion = RemotingClientVersion.V2_1)]
 namespace Roshambo.PlayerActor.Interfaces
@@ -16,17 +17,6 @@ namespace Roshambo.PlayerActor.Interfaces
     /// </summary>
     public interface IPlayerActor : IActor
     {
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> GetCountAsync(CancellationToken cancellationToken);
-
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task SetCountAsync(int count, CancellationToken cancellationToken);
+        Task<int> RefreshStreakAsync(WinOptions playerWinResult, CancellationToken cancellationToken);
     }
 }

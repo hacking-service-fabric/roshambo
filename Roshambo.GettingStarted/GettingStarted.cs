@@ -42,10 +42,15 @@ namespace Roshambo.GettingStarted
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-
-                (var computer1, var computer2, var result) = game.PlayRound();
+                var result = game.PlayRound();
                 ServiceEventSource.Current.ServiceMessage(this.Context, "{0} against {1} => {2}",
-                    computer1, computer2, result);
+                    result.PlayerOption, result.ComputerOption, result.Result switch
+                    {
+                        WinOptions.Won => "Computer 1",
+                        WinOptions.Lost => "Computer 2",
+                        WinOptions.Tied => "Tie",
+                        _ => "Inconceivable!"
+                    });
 
                 ServiceEventSource.Current.ServiceMessage(this.Context, "Working-{0}", ++iterations);
 
@@ -53,11 +58,10 @@ namespace Roshambo.GettingStarted
             }
         }
 
-        public Task DoSomething()
+        public Task<GameResult> Play(GameOptions playerOption)
         {
-            ServiceEventSource.Current.ServiceDidSomething();
-
-            return Task.CompletedTask;
+            var game = new GameEngine();
+            return Task.FromResult(game.PlayRound(playerOption));
         }
     }
 }

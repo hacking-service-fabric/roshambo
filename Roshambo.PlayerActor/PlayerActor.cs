@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
+using Roshambo.GettingStarted.Interfaces;
 using Roshambo.PlayerActor.Interfaces;
 
 namespace Roshambo.PlayerActor
@@ -47,25 +48,29 @@ namespace Roshambo.PlayerActor
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <returns></returns>
-        Task<int> IPlayerActor.GetCountAsync(CancellationToken cancellationToken)
+        public async Task<int> RefreshStreakAsync(WinOptions playerWinResult, CancellationToken cancellationToken)
         {
-            return this.StateManager.GetStateAsync<int>("count", cancellationToken);
-        }
+            if (playerWinResult == WinOptions.Tied)
+            {
+                return await this.StateManager.GetStateAsync<int>("streak", cancellationToken);
+            }
 
-        /// <summary>
-        /// TODO: Replace with your own actor method.
-        /// </summary>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        Task IPlayerActor.SetCountAsync(int count, CancellationToken cancellationToken)
-        {
-            // Requests are not guaranteed to be processed in order nor at most once.
-            // The update function here verifies that the incoming count is greater than the current count to preserve order.
-            return this.StateManager.AddOrUpdateStateAsync("count", count, (key, value) => count > value ? count : value, cancellationToken);
+            var lastWinResult = await this.StateManager.TryGetStateAsync<WinOptions>("lastWinResult", cancellationToken);
+            if (lastWinResult.HasValue && playerWinResult == lastWinResult.Value)
+            {
+                return await this.StateManager.AddOrUpdateStateAsync<int>("streak",
+                    1, (_, value) => ++value,
+                    cancellationToken);
+            }
+            else
+            {
+                await this.StateManager.SetStateAsync("lastWinResult", playerWinResult, cancellationToken);
+                await this.StateManager.SetStateAsync("streak", 1, cancellationToken);
+
+                return 1;
+            }
+
+
         }
     }
 }

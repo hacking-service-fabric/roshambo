@@ -1,4 +1,4 @@
-﻿namespace Roshambo.Shared
+﻿namespace Roshambo.GettingStarted.Interfaces
 {
     public enum GameOptions
     {
