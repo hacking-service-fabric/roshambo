@@ -18,11 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.GettingStarted.Interfaces", "Roshambo.GettingStarted.Interfaces\Roshambo.GettingStarted.Interfaces.csproj", "{C4DAAEF9-29E3-46BD-9E74-343804EE0F66}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Roshambo.Shared\Roshambo.Shared.projitems*{c1ce500a-9e2f-4ed1-9e0c-556df2f0a8d4}*SharedItemsImports = 5
-		Roshambo.Shared\Roshambo.Shared.projitems*{c4daaef9-29e3-46bd-9e74-343804ee0f66}*SharedItemsImports = 5
-		Roshambo.Shared\Roshambo.Shared.projitems*{d464af12-314a-44e1-ba2d-3891ddaf14bd}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64

@@ -150,7 +150,7 @@ internal sealed class ServiceEventSource : EventSource
     [Event(ServiceDidSomethingEventId, Level = EventLevel.Informational, Message = "Service was asked to do something, and did it", Keywords = Keywords.Requests)]
     public void ServiceDidSomething()
     {
-        WriteEvent(ServiceRequestStopEventId);
+        WriteEvent(ServiceDidSomethingEventId);
     }
         #endregion
 

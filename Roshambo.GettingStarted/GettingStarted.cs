@@ -61,6 +61,8 @@ namespace Roshambo.GettingStarted
         public Task<GameResult> Play(GameOptions playerOption)
         {
             var game = new GameEngine();
+            ServiceEventSource.Current.ServiceDidSomething();
+
             return Task.FromResult(game.PlayRound(playerOption));
         }
     }

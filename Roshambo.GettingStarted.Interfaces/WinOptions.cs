@@ -5,8 +5,8 @@ namespace Roshambo.GettingStarted.Interfaces
     [DataContract]
     public enum WinOptions
     {
-        Won,
-        Lost,
-        Tied
+        [EnumMember] Won,
+        [EnumMember] Lost,
+        [EnumMember] Tied
     }
 }
