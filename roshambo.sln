@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.Twilio", "Roshambo.Twilio\Roshambo.Twilio.csproj", "{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,14 @@ Global
 		{C4DAAEF9-29E3-46BD-9E74-343804EE0F66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4DAAEF9-29E3-46BD-9E74-343804EE0F66}.Release|x64.ActiveCfg = Release|Any CPU
 		{C4DAAEF9-29E3-46BD-9E74-343804EE0F66}.Release|x64.Build.0 = Release|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

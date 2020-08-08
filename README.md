@@ -2,15 +2,14 @@
 
 ```
 digraph Roshambo {
-  start -> receiver -> queue -> actor -> engine -> responder -> end
+  start -> webhook -> start
+  webhook -> engine
+  webhook -> actor
 
-  start [shape=plain label="Request"];
-  end [shape=plain label="End"];
+  start [shape=plain label="Twilio"];
   
-  receiver [label = "Roshambo.Twilio.Receiver"]
-  queue [label = "Roshambo.Queue"]
+  webhook [label = "Roshambo.Twilio"]
   actor [label = "Roshambo.PlayerActor"]
   engine [label = "Roshambo.GameEngine"]
-  responder [label = "Roshambo.Twilio.Responder"]
 }
 ```

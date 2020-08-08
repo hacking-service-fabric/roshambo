@@ -35,6 +35,9 @@
     <ProjectReference Include="..\Roshambo.Game\Roshambo.Game.csproj" />
     <ProjectReference Include="..\Roshambo.GettingStarted\Roshambo.GettingStarted.csproj" />
     <ProjectReference Include="..\Roshambo.PlayerActor\Roshambo.PlayerActor.csproj" />
+    <ProjectReference Include="..\Roshambo.Twilio\Roshambo.Twilio.csproj">
+      <ServiceLaunchUrl>http://{MachineName}:{ServicePort}/weatherforecast</ServiceLaunchUrl>
+    </ProjectReference>
     <ProjectReference Include="..\Roshambo.UI\Roshambo.UI.csproj">
       <ServiceLaunchUrl>http://{MachineName}:{ServicePort}/</ServiceLaunchUrl>
     </ProjectReference>
