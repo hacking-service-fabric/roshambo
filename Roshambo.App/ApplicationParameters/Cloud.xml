@@ -2,10 +2,5 @@
 <Application xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="fabric:/Roshambo.App" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
     <Parameter Name="Roshambo.Twilio_InstanceCount" Value="-1" />
-    <Parameter Name="Roshambo.Game_PartitionCount" Value="1" />
-    <Parameter Name="Roshambo.Game_MinReplicaSetSize" Value="3" />
-    <Parameter Name="Roshambo.Game_TargetReplicaSetSize" Value="3" />
-    <Parameter Name="Roshambo.UI_InstanceCount" Value="-1" />
-    <Parameter Name="Roshambo.GettingStarted_InstanceCount" Value="-1" />
   </Parameters>
 </Application>

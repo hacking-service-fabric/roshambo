@@ -3,12 +3,5 @@
   <Parameters>
     <Parameter Name="Roshambo.Twilio_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="Roshambo.Twilio_InstanceCount" Value="1" />
-    <Parameter Name="Roshambo.Game_PartitionCount" Value="1" />
-    <Parameter Name="Roshambo.Game_MinReplicaSetSize" Value="3" />
-    <Parameter Name="Roshambo.Game_TargetReplicaSetSize" Value="3" />
-    <Parameter Name="Roshambo.UI_ASPNETCORE_ENVIRONMENT" Value="Development" />
-    <Parameter Name="Roshambo.UI_InstanceCount" Value="1" />
-    <Parameter Name="Roshambo.GettingStarted_InstanceCount" Value="1" />
-    <Parameter Name="PlayerActorService_PartitionCount" Value="1" />
   </Parameters>
 </Application>

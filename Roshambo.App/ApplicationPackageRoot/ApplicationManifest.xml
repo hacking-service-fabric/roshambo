@@ -3,15 +3,6 @@
   <Parameters>
     <Parameter Name="Roshambo.Twilio_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="Roshambo.Twilio_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="Roshambo.Game_MinReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="Roshambo.Game_PartitionCount" DefaultValue="1" />
-    <Parameter Name="Roshambo.Game_TargetReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="Roshambo.UI_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
-    <Parameter Name="Roshambo.UI_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="Roshambo.GettingStarted_InstanceCount" DefaultValue="-1" />
-    <Parameter Name="PlayerActorService_PartitionCount" DefaultValue="10" />
-    <Parameter Name="PlayerActorService_MinReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="PlayerActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
@@ -23,24 +14,6 @@
       <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Roshambo.Twilio_ASPNETCORE_ENVIRONMENT]" />
     </EnvironmentOverrides>
   </ServiceManifestImport>
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Roshambo.PlayerActorPkg" ServiceManifestVersion="1.0.0" />
-  </ServiceManifestImport>
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Roshambo.GamePkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-  </ServiceManifestImport>
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Roshambo.UIPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-    <EnvironmentOverrides CodePackageRef="code">
-      <EnvironmentVariable Name="ASPNETCORE_ENVIRONMENT" Value="[Roshambo.UI_ASPNETCORE_ENVIRONMENT]" />
-    </EnvironmentOverrides>
-  </ServiceManifestImport>
-  <ServiceManifestImport>
-    <ServiceManifestRef ServiceManifestName="Roshambo.GettingStartedPkg" ServiceManifestVersion="1.0.0" />
-    <ConfigOverrides />
-  </ServiceManifestImport>
   <DefaultServices>
     <!-- The section below creates instances of service types, when an instance of this 
          application type is created. You can also create one or more instances of service type using the 
@@ -51,26 +24,6 @@
       <StatelessService ServiceTypeName="Roshambo.TwilioType" InstanceCount="[Roshambo.Twilio_InstanceCount]">
         <SingletonPartition />
       </StatelessService>
-    </Service>
-    <Service Name="Roshambo.Game" ServicePackageActivationMode="ExclusiveProcess">
-      <StatefulService ServiceTypeName="Roshambo.GameType" TargetReplicaSetSize="[Roshambo.Game_TargetReplicaSetSize]" MinReplicaSetSize="[Roshambo.Game_MinReplicaSetSize]">
-        <UniformInt64Partition PartitionCount="[Roshambo.Game_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
-      </StatefulService>
-    </Service>
-    <Service Name="Roshambo.UI" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="Roshambo.UIType" InstanceCount="[Roshambo.UI_InstanceCount]">
-        <SingletonPartition />
-      </StatelessService>
-    </Service>
-    <Service Name="Roshambo.GettingStarted" ServicePackageActivationMode="ExclusiveProcess">
-      <StatelessService ServiceTypeName="Roshambo.GettingStartedType" InstanceCount="[Roshambo.GettingStarted_InstanceCount]">
-        <SingletonPartition />
-      </StatelessService>
-    </Service>
-    <Service Name="PlayerActorService" GeneratedIdRef="49090075-5d86-451b-bcfa-477c8317bd5d|Persisted">
-      <StatefulService ServiceTypeName="PlayerActorServiceType" TargetReplicaSetSize="[PlayerActorService_TargetReplicaSetSize]" MinReplicaSetSize="[PlayerActorService_MinReplicaSetSize]">
-        <UniformInt64Partition PartitionCount="[PlayerActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
-      </StatefulService>
     </Service>
   </DefaultServices>
 </ApplicationManifest>
