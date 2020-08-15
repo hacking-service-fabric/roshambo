@@ -32,26 +32,27 @@ namespace Roshambo.Twilio
         /// <returns>The collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            var listeners = this.CreateServiceRemotingInstanceListeners()
-                .ToList();
-            listeners.Add(new ServiceInstanceListener(serviceContext =>
-                new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+            return Enumerable.Union(
+                this.CreateServiceRemotingInstanceListeners(),
+                new[]
                 {
-                    ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
+                    new ServiceInstanceListener(serviceContext =>
+                        new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+                        {
+                            ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
-                    return new WebHostBuilder()
-                                .UseKestrel()
-                                .ConfigureServices(
-                                    services => services
-                                        .AddSingleton<StatelessServiceContext>(serviceContext))
-                                .UseContentRoot(Directory.GetCurrentDirectory())
-                                .UseStartup<Startup>()
-                                .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
-                                .UseUrls(url)
-                                .Build();
-                })));
-
-            return listeners;
+                            return new WebHostBuilder()
+                                        .UseKestrel()
+                                        .ConfigureServices(
+                                            services => services
+                                                .AddSingleton<StatelessServiceContext>(serviceContext))
+                                        .UseContentRoot(Directory.GetCurrentDirectory())
+                                        .UseStartup<Startup>()
+                                        .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
+                                        .UseUrls(url)
+                                        .Build();
+                        }))
+                });
         }
 
         public Task<GameOption> GetUserInputAsync(string input)
