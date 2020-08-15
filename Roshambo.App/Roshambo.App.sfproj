@@ -32,6 +32,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Roshambo.GameServices\Roshambo.GameServices.csproj" />
+    <ProjectReference Include="..\Roshambo.PlayerSessionActor\Roshambo.PlayerSessionActor.csproj" />
     <ProjectReference Include="..\Roshambo.Twilio\Roshambo.Twilio.csproj">
       <ServiceLaunchUrl>http://{MachineName}:{ServicePort}/weatherforecast</ServiceLaunchUrl>
     </ProjectReference>

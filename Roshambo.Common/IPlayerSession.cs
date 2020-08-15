@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.ServiceFabric.Actors;
 
 namespace Roshambo.Common
 {
-    public interface IPlayerSession
+    public interface IPlayerSession: IActor
     {
         Task<GameOption> GetComputerTurnAsync();
         Task SaveNextComputerTurnAsync(GameOption turn);
