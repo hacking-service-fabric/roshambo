@@ -5,6 +5,6 @@ namespace Roshambo.Common
 {
     public interface IGameService: IService
     {
-        Task<TurnWinner> JudgeTurnAsync(GameOption playerTurn, GameOption computerTurn);
+        Task<MoveWinner> JudgeMoveAsync(GameOption playerMove, GameOption computerMove);
     }
 }

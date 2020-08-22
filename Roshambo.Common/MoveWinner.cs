@@ -3,7 +3,7 @@
 namespace Roshambo.Common
 {
     [DataContract]
-    public enum TurnWinner
+    public enum MoveWinner
     {
         [EnumMember] Human,
         [EnumMember] Computer,

@@ -1,5 +1,7 @@
-﻿using System.Fabric;
+﻿using System;
+using System.Fabric;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 
 namespace Roshambo.Common
 {
@@ -17,6 +19,14 @@ namespace Roshambo.Common
             StatefulServiceContext statefulService)
         {
             return services.AddSingleton(statefulService);
+        }
+
+        public static IServiceCollection AddTranslationService(
+            this IServiceCollection services)
+        {
+            return services.AddSingleton<Func<ITranslationService>>(
+                () => ServiceProxy.Create<ITranslationService>(
+                    new Uri("fabric:/Roshambo.App/Roshambo.Twilio")));
         }
     }
 }

@@ -37,15 +37,14 @@ namespace Roshambo.Twilio
                 new[]
                 {
                     new ServiceInstanceListener(serviceContext =>
-                        new KestrelCommunicationListener(serviceContext, "ServiceEndpoint", (url, listener) =>
+                        new KestrelCommunicationListener(serviceContext, "PublicEndpoint", (url, listener) =>
                         {
                             ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
 
                             return new WebHostBuilder()
                                         .UseKestrel()
                                         .ConfigureServices(
-                                            services => services
-                                                .AddSingleton<StatelessServiceContext>(serviceContext))
+                                            services => services.AddStatelessService(serviceContext))
                                         .UseContentRoot(Directory.GetCurrentDirectory())
                                         .UseStartup<Startup>()
                                         .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
@@ -60,9 +59,15 @@ namespace Roshambo.Twilio
             throw new NotImplementedException();
         }
 
-        public Task<string> GetTextMessageBody(GameOption playerTurn, GameOption computerTurn, TurnWinner winner)
+        public Task<string> GetTextMessageBodyAsync(GameOption playerMove, GameOption computerMove, MoveWinner winner)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(winner switch
+            {
+                MoveWinner.Human => $"{playerMove} beat {computerMove}.",
+                MoveWinner.Computer => $"{playerMove} lost to {computerMove}.",
+                MoveWinner.Tie => "Tie!",
+                _ => $"I didn't recognize the input {winner} :("
+            });
         }
     }
 }

@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.4.677" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Roshambo.Common\Roshambo.Common.csproj" />
+  </ItemGroup>
+
 </Project>

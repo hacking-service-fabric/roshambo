@@ -5,14 +5,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Roshambo.Common;
 
 namespace Roshambo.GameServices
 {
     /// <summary>
     /// An instance of this class is created for each service instance by the Service Fabric runtime.
     /// </summary>
-    internal sealed class GameServices : StatelessService
+    internal sealed class GameServices : StatelessService, IGameOptionService, IGameService
     {
         public GameServices(StatelessServiceContext context)
             : base(context)
@@ -24,7 +26,7 @@ namespace Roshambo.GameServices
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            return new ServiceInstanceListener[0];
+            return this.CreateServiceRemotingInstanceListeners();
         }
 
         /// <summary>
@@ -46,6 +48,16 @@ namespace Roshambo.GameServices
 
                 await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
+        }
+
+        public Task<GameOption> GetRandomOptionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<MoveWinner> JudgeMoveAsync(GameOption playerMove, GameOption computerMove)
+        {
+            throw new NotImplementedException();
         }
     }
 }
