@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Fabric;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.ServiceFabric.Actors;
+using Microsoft.ServiceFabric.Actors.Client;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
 
 namespace Roshambo.Common
@@ -27,6 +29,15 @@ namespace Roshambo.Common
             return services.AddSingleton<Func<ITranslationService>>(
                 () => ServiceProxy.Create<ITranslationService>(
                     new Uri("fabric:/Roshambo.App/Roshambo.Twilio")));
+        }
+
+        public static IServiceCollection AddPlayerSession(
+            this IServiceCollection services)
+        {
+            return services.AddSingleton<Func<string, IPlayerSession>>(
+                phoneNumber => ActorProxy.Create<IPlayerSession>(
+                    new ActorId($"player/{phoneNumber}"),
+                    new Uri("fabric:/Roshambo.App/PlayerSessionActorService")));
         }
     }
 }

@@ -9,11 +9,15 @@ namespace Roshambo.Twilio
     {
         private readonly RequestDelegate _next;
         private readonly Func<ITranslationService> _translationServiceFactory;
+        private readonly Func<string, IPlayerSession> _playerSessionProvider;
 
-        public TwilioMiddleware(RequestDelegate next, Func<ITranslationService> translationServiceFactory)
+        public TwilioMiddleware(RequestDelegate next,
+            Func<ITranslationService> translationServiceFactory,
+            Func<string, IPlayerSession> playerSessionProvider)
         {
             _next = next;
             _translationServiceFactory = translationServiceFactory;
+            _playerSessionProvider = playerSessionProvider;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -21,9 +25,10 @@ namespace Roshambo.Twilio
             try
             {
                 var translationService = _translationServiceFactory.Invoke();
+                var playerSession = _playerSessionProvider.Invoke("test");
 
                 var playerMove = GameOption.Rock;
-                var computerMove = GameOption.Scissor;
+                var computerMove = await playerSession.GetComputerMoveAsync();
                 var winner = MoveWinner.Human;
 
                 var text = await translationService.GetTextMessageBodyAsync(
@@ -33,6 +38,7 @@ namespace Roshambo.Twilio
             catch (Exception e)
             {
                 ServiceEventSource.Current.RuntimeException(e);
+                await WriteErrorResponseAsync(context.Response);
             }
         }
 
@@ -46,6 +52,12 @@ namespace Roshambo.Twilio
         <Body>{text}</Body>
     </Message>
 </Response>");
+        }
+
+        private Task WriteErrorResponseAsync(HttpResponse response)
+        {
+            response.StatusCode = 500;
+            return Task.CompletedTask;
         }
     }
 }

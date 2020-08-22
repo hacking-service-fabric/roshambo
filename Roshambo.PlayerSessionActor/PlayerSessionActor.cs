@@ -47,14 +47,14 @@ namespace Roshambo.PlayerSessionActor
             return this.StateManager.TryAddStateAsync("count", 0);
         }
 
-        public Task<GameOption> GetComputerMoveAsync()
+        public async Task<GameOption> GetComputerMoveAsync()
         {
-            throw new NotImplementedException();
+            return await StateManager.GetStateAsync<GameOption>("nextComputerMove");
         }
 
-        public Task SaveNextComputerMoveAsync(GameOption move)
+        public async Task SaveNextComputerMoveAsync(GameOption move)
         {
-            throw new NotImplementedException();
+            await StateManager.SetStateAsync("nextComputerMove", move);
         }
 
         public Task<int> StoreMoveOutcomeAndGetStreakAsync(MoveWinner moveWinner)
