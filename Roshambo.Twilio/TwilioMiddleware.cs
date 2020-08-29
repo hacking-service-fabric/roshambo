@@ -28,11 +28,13 @@ namespace Roshambo.Twilio
         {
             try
             {
+                // TODO: Validate AccountSid
+
                 var translationService = _translationServiceFactory.Invoke();
-                var playerSession = _playerSessionProvider.Invoke("test");
+                var playerSession = _playerSessionProvider.Invoke("test"); // TODO: From
                 var gameService = _gameServiceFactory.Invoke();
 
-                var playerMove = await translationService.GetUserInputAsync("bla"); // TODO: parameter
+                var playerMove = await translationService.GetUserInputAsync("bla"); // TODO: Body
                 var computerMove = await playerSession.GetComputerMoveAsync();
                 var winner = await gameService.JudgeTurnAsync(playerMove, computerMove);
                 var playerTurnResult = await playerSession.StoreTurnOutcomeAsync(winner);
