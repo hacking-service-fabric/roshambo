@@ -59,7 +59,14 @@ namespace Roshambo.PlayerSessionActor
 
         public Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new PlayerTurnResult
+            {
+                StreakReset = false,
+                CurrentStreak = 7,
+                PreviousStreak = 6,
+                NextMoveReady = true
+            });
+            // TODO: Implement
         }
     }
 }

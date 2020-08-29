@@ -53,12 +53,14 @@ namespace Roshambo.GameServices
 
         public Task<GameOption> GetRandomOptionAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GameOption.Paper);
+            // TODO: Implement
         }
 
         public Task<TurnWinner> JudgeTurnAsync(GameOption playerMove, GameOption computerMove)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(TurnWinner.Human);
+            // TODO: Implement
         }
     }
 }

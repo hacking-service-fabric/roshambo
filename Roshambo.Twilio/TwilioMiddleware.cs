@@ -11,14 +11,17 @@ namespace Roshambo.Twilio
         private readonly RequestDelegate _next;
         private readonly Func<ITranslationService> _translationServiceFactory;
         private readonly Func<string, IPlayerSession> _playerSessionProvider;
+        private readonly Func<IGameService> _gameServiceFactory;
 
         public TwilioMiddleware(RequestDelegate next,
             Func<ITranslationService> translationServiceFactory,
-            Func<string, IPlayerSession> playerSessionProvider)
+            Func<string, IPlayerSession> playerSessionProvider,
+            Func<IGameService> gameServiceFactory)
         {
             _next = next;
             _translationServiceFactory = translationServiceFactory;
             _playerSessionProvider = playerSessionProvider;
+            _gameServiceFactory = gameServiceFactory;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -27,13 +30,15 @@ namespace Roshambo.Twilio
             {
                 var translationService = _translationServiceFactory.Invoke();
                 var playerSession = _playerSessionProvider.Invoke("test");
+                var gameService = _gameServiceFactory.Invoke();
 
-                var playerMove = GameOption.Rock; // TODO: Get option with translation service
+                var playerMove = await translationService.GetUserInputAsync("bla"); // TODO: parameter
                 var computerMove = await playerSession.GetComputerMoveAsync();
-                var winner = TurnWinner.Human;
+                var winner = await gameService.JudgeTurnAsync(playerMove, computerMove);
+                var playerTurnResult = await playerSession.StoreTurnOutcomeAsync(winner);
 
                 var text = await translationService.GetTextMessageBodyAsync(
-                    playerMove, computerMove, winner);
+                    playerMove, computerMove, winner, playerTurnResult);
                 await WriteResponseAsync(context.Response, text);
             }
             catch (Exception e)

@@ -57,10 +57,13 @@ namespace Roshambo.Twilio
 
         public Task<GameOption> GetUserInputAsync(string input)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(GameOption.Rock);
+            // TODO: Implement
         }
 
-        public Task<string> GetTextMessageBodyAsync(GameOption playerMove, GameOption computerMove, TurnWinner winner)
+        public Task<string> GetTextMessageBodyAsync(
+            GameOption playerMove, GameOption computerMove,
+            TurnWinner winner, PlayerTurnResult playerTurnResult)
         {
             return Task.FromResult(winner switch
             {
