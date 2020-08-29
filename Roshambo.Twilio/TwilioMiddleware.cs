@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Roshambo.Common;
+using Roshambo.Common.Models;
 
 namespace Roshambo.Twilio
 {
@@ -29,7 +30,7 @@ namespace Roshambo.Twilio
 
                 var playerMove = GameOption.Rock;
                 var computerMove = await playerSession.GetComputerMoveAsync();
-                var winner = MoveWinner.Human;
+                var winner = TurnWinner.Human;
 
                 var text = await translationService.GetTextMessageBodyAsync(
                     playerMove, computerMove, winner);
@@ -37,7 +38,9 @@ namespace Roshambo.Twilio
             }
             catch (Exception e)
             {
-                ServiceEventSource.Current.RuntimeException(e);
+                ServiceEventSource.Current.RuntimeException(
+                    e.Message,
+                    e.StackTrace);
                 await WriteErrorResponseAsync(context.Response);
             }
         }

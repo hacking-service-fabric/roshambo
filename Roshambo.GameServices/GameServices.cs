@@ -8,6 +8,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Roshambo.Common;
+using Roshambo.Common.Models;
 
 namespace Roshambo.GameServices
 {
@@ -55,7 +56,7 @@ namespace Roshambo.GameServices
             throw new NotImplementedException();
         }
 
-        public Task<MoveWinner> JudgeMoveAsync(GameOption playerMove, GameOption computerMove)
+        public Task<TurnWinner> JudgeTurnAsync(GameOption playerMove, GameOption computerMove)
         {
             throw new NotImplementedException();
         }

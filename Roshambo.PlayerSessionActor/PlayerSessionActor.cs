@@ -7,6 +7,7 @@ using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
 using Roshambo.Common;
+using Roshambo.Common.Models;
 
 namespace Roshambo.PlayerSessionActor
 {
@@ -57,7 +58,7 @@ namespace Roshambo.PlayerSessionActor
             await StateManager.SetStateAsync("nextComputerMove", move);
         }
 
-        public Task<int> StoreMoveOutcomeAndGetStreakAsync(MoveWinner moveWinner)
+        public Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
+using Roshambo.Common.Models;
 
 namespace Roshambo.Common
 {
@@ -8,6 +9,6 @@ namespace Roshambo.Common
         Task<GameOption> GetComputerMoveAsync();
         Task SaveNextComputerMoveAsync(GameOption move);
 
-        Task<int> StoreMoveOutcomeAndGetStreakAsync(MoveWinner moveWinner);
+        Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner);
     }
 }

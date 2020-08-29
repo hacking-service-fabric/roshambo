@@ -156,9 +156,9 @@ namespace Roshambo.Twilio
 
         private const int RuntimeExceptionId = 7;
         [Event(RuntimeExceptionId, Level = EventLevel.Error, Message = "Exception while running application: {0}{1}", Keywords = Keywords.Requests)]
-        public void RuntimeException(Exception exception)
+        public void RuntimeException(string exceptionMessage, string stackTrace)
         {
-            WriteEvent(RuntimeExceptionId, exception.Message, exception.StackTrace);
+            WriteEvent(RuntimeExceptionId, exceptionMessage, stackTrace);
         }
         #endregion
 

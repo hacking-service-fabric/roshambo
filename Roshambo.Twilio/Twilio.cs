@@ -14,6 +14,7 @@ using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
+using Roshambo.Common.Models;
 
 namespace Roshambo.Twilio
 {
@@ -59,13 +60,13 @@ namespace Roshambo.Twilio
             throw new NotImplementedException();
         }
 
-        public Task<string> GetTextMessageBodyAsync(GameOption playerMove, GameOption computerMove, MoveWinner winner)
+        public Task<string> GetTextMessageBodyAsync(GameOption playerMove, GameOption computerMove, TurnWinner winner)
         {
             return Task.FromResult(winner switch
             {
-                MoveWinner.Human => $"{playerMove} beat {computerMove}.",
-                MoveWinner.Computer => $"{playerMove} lost to {computerMove}.",
-                MoveWinner.Tie => "Tie!",
+                TurnWinner.Human => $"{playerMove} beat {computerMove}.",
+                TurnWinner.Computer => $"{playerMove} lost to {computerMove}.",
+                TurnWinner.Tie => "Tie!",
                 _ => $"I didn't recognize the input {winner} :("
             });
         }

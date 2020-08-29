@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Roshambo.Common
+namespace Roshambo.Common.Models
 {
     [DataContract]
-    public enum MoveWinner
+    public enum TurnWinner
     {
         [EnumMember] Human,
         [EnumMember] Computer,
