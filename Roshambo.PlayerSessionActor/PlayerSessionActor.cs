@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Runtime;
 using Microsoft.ServiceFabric.Actors.Client;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Roshambo.Common;
 using Roshambo.Common.Models;
 
@@ -22,6 +23,10 @@ namespace Roshambo.PlayerSessionActor
     [StatePersistence(StatePersistence.Persisted)]
     internal class PlayerSessionActor : Actor, IPlayerSession
     {
+        private const string NextComputerMoveStateName = "nextComputerMove";
+
+        private readonly Func<IGameOptionService> _gameOptionServiceFactory;
+
         /// <summary>
         /// Initializes a new instance of PlayerSessionActor
         /// </summary>
@@ -30,32 +35,26 @@ namespace Roshambo.PlayerSessionActor
         public PlayerSessionActor(ActorService actorService, ActorId actorId) 
             : base(actorService, actorId)
         {
+            _gameOptionServiceFactory = ServiceExtensions.GetGameOptionServiceFactory();
         }
 
         /// <summary>
         /// This method is called whenever an actor is activated.
         /// An actor is activated the first time any of its methods are invoked.
         /// </summary>
-        protected override Task OnActivateAsync()
+        protected override async Task OnActivateAsync()
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
-            // The StateManager is this actor's private state store.
-            // Data stored in the StateManager will be replicated for high-availability for actors that use volatile or persisted state storage.
-            // Any serializable object can be saved in the StateManager.
-            // For more information, see https://aka.ms/servicefabricactorsstateserialization
+            var gameOptionService = _gameOptionServiceFactory.Invoke();
+            var nextComputerMove = await gameOptionService.GetRandomOptionAsync();
 
-            return this.StateManager.TryAddStateAsync("count", 0);
+            await StateManager.AddStateAsync(NextComputerMoveStateName, nextComputerMove);
         }
 
         public async Task<GameOption> GetComputerMoveAsync()
         {
-            return await StateManager.GetStateAsync<GameOption>("nextComputerMove");
-        }
-
-        public async Task SaveNextComputerMoveAsync(GameOption move)
-        {
-            await StateManager.SetStateAsync("nextComputerMove", move);
+            return await StateManager.GetStateAsync<GameOption>(NextComputerMoveStateName);
         }
 
         public Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner)

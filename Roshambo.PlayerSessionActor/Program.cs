@@ -1,9 +1,7 @@
+using Microsoft.ServiceFabric.Actors.Runtime;
 using System;
-using System.Diagnostics;
-using System.Fabric;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Actors.Runtime;
 
 namespace Roshambo.PlayerSessionActor
 {
@@ -12,7 +10,7 @@ namespace Roshambo.PlayerSessionActor
         /// <summary>
         /// This is the entry point of the service host process.
         /// </summary>
-        private static void Main()
+        private static async Task Main()
         {
             try
             {
@@ -21,8 +19,8 @@ namespace Roshambo.PlayerSessionActor
                 // are automatically populated when you build this project.
                 // For more information, see https://aka.ms/servicefabricactorsplatform
 
-                ActorRuntime.RegisterActorAsync<PlayerSessionActor> (
-                   (context, actorType) => new ActorService(context, actorType)).GetAwaiter().GetResult();
+                await ActorRuntime.RegisterActorAsync<PlayerSessionActor> (
+                   (context, actorType) => new ActorService(context, actorType));
 
                 Thread.Sleep(Timeout.Infinite);
             }

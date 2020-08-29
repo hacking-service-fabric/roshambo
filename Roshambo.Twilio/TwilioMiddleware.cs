@@ -28,7 +28,7 @@ namespace Roshambo.Twilio
                 var translationService = _translationServiceFactory.Invoke();
                 var playerSession = _playerSessionProvider.Invoke("test");
 
-                var playerMove = GameOption.Rock;
+                var playerMove = GameOption.Rock; // TODO: Get option with translation service
                 var computerMove = await playerSession.GetComputerMoveAsync();
                 var winner = TurnWinner.Human;
 

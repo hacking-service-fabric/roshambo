@@ -7,7 +7,6 @@ namespace Roshambo.Common
     public interface IPlayerSession: IActor
     {
         Task<GameOption> GetComputerMoveAsync();
-        Task SaveNextComputerMoveAsync(GameOption move);
 
         Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner);
     }
