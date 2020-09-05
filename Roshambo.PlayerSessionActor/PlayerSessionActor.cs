@@ -46,10 +46,11 @@ namespace Roshambo.PlayerSessionActor
         {
             ActorEventSource.Current.ActorMessage(this, "Actor activated.");
 
-            var gameOptionService = _gameOptionServiceFactory.Invoke();
-            var nextComputerMove = await gameOptionService.GetRandomOptionAsync();
-
-            await StateManager.AddStateAsync(NextComputerMoveStateName, nextComputerMove);
+            var hasNextComputerMove = await StateManager.ContainsStateAsync(NextComputerMoveStateName);
+            if (!hasNextComputerMove)
+            {
+                await UpdateNextComputerMoveAsync();
+            }
         }
 
         public async Task<GameOption> GetComputerMoveAsync()
@@ -57,16 +58,26 @@ namespace Roshambo.PlayerSessionActor
             return await StateManager.GetStateAsync<GameOption>(NextComputerMoveStateName);
         }
 
-        public Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner)
+        public async Task<PlayerTurnResult> StoreTurnOutcomeAsync(TurnWinner turnWinner)
         {
-            return Task.FromResult(new PlayerTurnResult
+            await UpdateNextComputerMoveAsync();
+
+            return new PlayerTurnResult
             {
                 StreakReset = false,
                 CurrentStreak = 7,
                 PreviousStreak = 6,
                 NextMoveReady = true
-            });
+            };
             // TODO: Implement
+        }
+
+        private async Task UpdateNextComputerMoveAsync()
+        {
+            var gameOptionService = _gameOptionServiceFactory.Invoke();
+            var nextComputerMove = await gameOptionService.GetRandomOptionAsync();
+
+            await StateManager.SetStateAsync(NextComputerMoveStateName, nextComputerMove);
         }
     }
 }
