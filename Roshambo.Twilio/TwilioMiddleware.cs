@@ -1,31 +1,35 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Roshambo.Common;
 using System;
 using System.Threading.Tasks;
-using Roshambo.Common;
-using Roshambo.Common.Models;
 
 namespace Roshambo.Twilio
 {
     public class TwilioMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly Func<ITranslationService> _translationServiceFactory;
         private readonly Func<string, IPlayerSession> _playerSessionProvider;
         private readonly Func<IGameService> _gameServiceFactory;
+        private readonly IRequestDataProvider _requestDataProvider;
 
         public TwilioMiddleware(RequestDelegate next,
             Func<ITranslationService> translationServiceFactory,
             Func<string, IPlayerSession> playerSessionProvider,
-            Func<IGameService> gameServiceFactory)
+            Func<IGameService> gameServiceFactory,
+            IRequestDataProvider requestDataProvider)
         {
-            _next = next;
             _translationServiceFactory = translationServiceFactory;
             _playerSessionProvider = playerSessionProvider;
             _gameServiceFactory = gameServiceFactory;
+            _requestDataProvider = requestDataProvider;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var data = await _requestDataProvider.GetRequestData();
+            ServiceEventSource.Current.Message("Endpoint got {0}, {1}",
+                data.Body["Y"], data.Body["X"]);
+
             try
             {
                 // TODO: Validate AccountSid
