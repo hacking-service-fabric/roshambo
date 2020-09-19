@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Roshambo.Twilio.Models;
 using System.Threading.Tasks;
-using Roshambo.Twilio.Models;
 
 namespace Roshambo.Twilio
 {
     public interface IRequestDataProvider
     {
-        Task<RequestData> GetRequestData();
+        Task<RequestData> GetRequestDataAsync();
     }
 }

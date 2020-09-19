@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace Roshambo.Twilio
 {
-    public class TwilioMiddleware
+    public class TwilioMiddleware: IMiddleware
     {
         private readonly Func<ITranslationService> _translationServiceFactory;
         private readonly Func<string, IPlayerSession> _playerSessionProvider;
         private readonly Func<IGameService> _gameServiceFactory;
         private readonly IRequestDataProvider _requestDataProvider;
 
-        public TwilioMiddleware(RequestDelegate next,
+        public TwilioMiddleware(
             Func<ITranslationService> translationServiceFactory,
             Func<string, IPlayerSession> playerSessionProvider,
             Func<IGameService> gameServiceFactory,
@@ -24,11 +24,11 @@ namespace Roshambo.Twilio
             _requestDataProvider = requestDataProvider;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var data = await _requestDataProvider.GetRequestData();
+            var data = await _requestDataProvider.GetRequestDataAsync();
             ServiceEventSource.Current.Message("Endpoint got {0}, {1}",
-                data.Body["Y"], data.Body["X"]);
+                data.Url, data.Signature);
 
             try
             {
@@ -38,7 +38,7 @@ namespace Roshambo.Twilio
                 var playerSession = _playerSessionProvider.Invoke("test"); // TODO: From
                 var gameService = _gameServiceFactory.Invoke();
 
-                var playerMove = await translationService.GetUserInputAsync("bla"); // TODO: Body
+                var playerMove = await translationService.GetUserInputAsync("bla"); // TODO: Parameters
                 var computerMove = await playerSession.GetComputerMoveAsync();
                 var winner = await gameService.JudgeTurnAsync(playerMove, computerMove);
                 var playerTurnResult = await playerSession.StoreTurnOutcomeAsync(winner);

@@ -1,16 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Roshambo.Common;
 
 namespace Roshambo.Twilio
@@ -34,7 +26,11 @@ namespace Roshambo.Twilio
 
             services
                 .AddHttpContextAccessor()
-                .AddSingleton<IRequestDataProvider, RequestDataProvider>();
+                .AddScoped<IRequestDataProvider, RequestDataProvider>();
+
+            services
+                .AddTransient<TwilioValidationMiddleware>()
+                .AddTransient<TwilioMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +41,7 @@ namespace Roshambo.Twilio
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<TwilioValidationMiddleware>();
             app.UseMiddleware<TwilioMiddleware>();
         }
     }

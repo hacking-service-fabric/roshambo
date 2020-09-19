@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.WebUtilities;
 using Roshambo.Twilio.Models;
-using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Roshambo.Twilio
 {
     public class RequestDataProvider: IRequestDataProvider
     {
-        private static readonly Random Random = new Random();
-        private readonly int _randomNumber = Random.Next();
-
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public RequestDataProvider(IHttpContextAccessor httpContextAccessor)
@@ -18,16 +17,24 @@ namespace Roshambo.Twilio
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<RequestData> GetRequestData()
+        public async Task<RequestData> GetRequestDataAsync()
         {
-            return Task.FromResult(new RequestData
+            var request = _httpContextAccessor.HttpContext.Request;
+            using var bodyStream = new StreamReader(request.Body);
+
+            var body = await bodyStream.ReadToEndAsync();
+
+            var parameters = QueryHelpers.ParseQuery(body)
+                .ToDictionary(
+                    k => k.Key,
+                    v => v.Value.First());
+
+            return new RequestData
             {
-                Body = new Dictionary<string, string>
-                {
-                    ["X"] = _httpContextAccessor.HttpContext.Request.Headers["X-Twilio-Signature"],
-                    ["Y"] = _randomNumber.ToString()
-                }
-            });
+                Url = request.GetDisplayUrl(),
+                Signature = request.Headers["X-Twilio-Signature"],
+                Parameters = parameters
+            };
         }
     }
 }

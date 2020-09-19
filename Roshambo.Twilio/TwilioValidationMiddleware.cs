@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Roshambo.Twilio
 {
-    public class TwilioValidationMiddleware
+    public class TwilioValidationMiddleware: IMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly IRequestDataProvider _requestDataProvider;
 
-        public TwilioValidationMiddleware(RequestDelegate next,
-            IRequestDataProvider requestDataProvider)
+        public TwilioValidationMiddleware(IRequestDataProvider requestDataProvider)
         {
-            _next = next;
             _requestDataProvider = requestDataProvider;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var data = await _requestDataProvider.GetRequestData();
+            var data = await _requestDataProvider.GetRequestDataAsync();
             ServiceEventSource.Current.Message("Validator got {0}, {1}",
-                data.Body["Y"], data.Body["X"]);
+                data.Url, data.Signature);
 
-            if (true == false)
+            if (true)
             {
-                await _next(context);
+                await next(context);
             }
             else
             {
