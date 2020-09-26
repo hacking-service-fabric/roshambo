@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Roshambo.Common;
+using Twilio.Security;
 
 namespace Roshambo.Twilio
 {
@@ -27,6 +28,8 @@ namespace Roshambo.Twilio
             services
                 .AddHttpContextAccessor()
                 .AddScoped<IRequestDataProvider, RequestDataProvider>();
+
+            services.AddSingleton(new RequestValidator(Configuration.GetValue<string>("TwilioAuthToken")));
 
             services
                 .AddTransient<TwilioValidationMiddleware>()

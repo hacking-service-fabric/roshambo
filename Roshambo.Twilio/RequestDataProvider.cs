@@ -19,22 +19,24 @@ namespace Roshambo.Twilio
 
         public async Task<RequestData> GetRequestDataAsync()
         {
-            var request = _httpContextAccessor.HttpContext.Request;
-            using var bodyStream = new StreamReader(request.Body);
+            var result = new RequestData();
 
+            var context = _httpContextAccessor.HttpContext;
+            var request = context.Request;
+
+            result.Url = request.GetDisplayUrl();
+            result.IsLocal = request.Host.Host.ToLower() == "localhost";
+            result.Signature = request.Headers["X-Twilio-Signature"];
+
+            using var bodyStream = new StreamReader(request.Body);
             var body = await bodyStream.ReadToEndAsync();
 
-            var parameters = QueryHelpers.ParseQuery(body)
+            result.Parameters = QueryHelpers.ParseQuery(body)
                 .ToDictionary(
                     k => k.Key,
                     v => v.Value.First());
 
-            return new RequestData
-            {
-                Url = request.GetDisplayUrl(),
-                Signature = request.Headers["X-Twilio-Signature"],
-                Parameters = parameters
-            };
+            return result;
         }
     }
 }

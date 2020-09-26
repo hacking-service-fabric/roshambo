@@ -1,20 +1,16 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Roshambo.Common;
-using System;
+using Roshambo.Common.Models;
 using System.Collections.Generic;
 using System.Fabric;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Communication.Runtime;
-using Microsoft.ServiceFabric.Services.Remoting;
-using Microsoft.ServiceFabric.Services.Remoting.Runtime;
-using Microsoft.ServiceFabric.Services.Runtime;
-using Roshambo.Common.Models;
 
 namespace Roshambo.Twilio
 {
@@ -44,6 +40,9 @@ namespace Roshambo.Twilio
 
                             return new WebHostBuilder()
                                         .UseKestrel()
+                                        .UseConfiguration(new ConfigurationBuilder()
+                                            .AddEnvironmentVariables("ROSHAMBO:")
+                                            .Build())
                                         .ConfigureServices(
                                             services => services.AddStatelessService(serviceContext))
                                         .UseContentRoot(Directory.GetCurrentDirectory())
