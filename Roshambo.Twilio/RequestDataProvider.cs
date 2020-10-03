@@ -22,7 +22,12 @@ namespace Roshambo.Twilio
             _httpContextAccessor = httpContextAccessor;
         }
 
+        private RequestData _requestData;
+
         public async Task<RequestData> GetRequestDataAsync()
+            => _requestData ??= await _getRequestDataAsync();
+
+        private async Task<RequestData> _getRequestDataAsync()
         {
             var result = new RequestData();
 
