@@ -29,7 +29,8 @@ namespace Roshambo.Twilio
                 .AddHttpContextAccessor()
                 .AddScoped<IRequestDataProvider, RequestDataProvider>();
 
-            services.AddSingleton(new RequestValidator(Configuration.GetValue<string>("TwilioAuthToken")));
+            services.AddSingleton(new RequestValidator(
+                Configuration.GetValue<string>("TwilioAuthToken")));
 
             services
                 .AddTransient<TwilioValidationMiddleware>()
