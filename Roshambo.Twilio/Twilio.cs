@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
@@ -7,6 +8,7 @@ using Microsoft.ServiceFabric.Services.Runtime;
 using Roshambo.Common;
 using Roshambo.Common.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Fabric;
 using System.IO;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Roshambo.Twilio
     /// <summary>
     /// The FabricRuntime creates an instance of this class for each service type instance. 
     /// </summary>
-    internal sealed class Twilio : StatelessService, ITranslationService
+    public sealed class Twilio : StatelessService, ITranslationService
     {
         public Twilio(StatelessServiceContext context)
             : base(context)
@@ -56,21 +58,34 @@ namespace Roshambo.Twilio
 
         public Task<GameOption> GetUserInputAsync(string input)
         {
-            return Task.FromResult(GameOption.Rock);
-            // TODO: Implement
+            return Task.FromResult(input.ToLower() switch
+            {
+                "rock" => GameOption.Rock,
+                "paper" => GameOption.Paper,
+                "scissor" => GameOption.Scissor,
+                "scissors" => GameOption.Scissor,
+                _ => throw new ValidationException(
+                    $"Input {input} not recognized.")
+            });
         }
 
         public Task<string> GetTextMessageBodyAsync(
             GameOption playerMove, GameOption computerMove,
             TurnWinner winner, PlayerTurnResult playerTurnResult)
         {
+            if (!playerTurnResult.NextMoveReady)
+                throw new ValidationException("Next move must be ready.");
+
             return Task.FromResult(winner switch
             {
                 TurnWinner.Human => $"{playerMove} beat {computerMove}.",
                 TurnWinner.Computer => $"{playerMove} lost to {computerMove}.",
-                TurnWinner.Tie => "Tie!",
-                _ => $"I didn't recognize the input {winner} :("
+                TurnWinner.Tie => $"Tie! Your streak remains at {playerTurnResult.CurrentStreak}.",
+                _ => throw new ValidationException(
+                    $"Input {winner} not recognized.")
             });
+
+            // TODO: Update response text
         }
     }
 }

@@ -12,11 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.Twilio", "Roshambo.Twilio\Roshambo.Twilio.csproj", "{3B6A8CD0-C372-4E29-BD81-CB4C8379FD88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.Common", "Roshambo.Common\Roshambo.Common.csproj", "{C28C25E3-4A92-40F0-80E1-D06E73E6C5CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.Common", "Roshambo.Common\Roshambo.Common.csproj", "{C28C25E3-4A92-40F0-80E1-D06E73E6C5CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.GameServices", "Roshambo.GameServices\Roshambo.GameServices.csproj", "{72FFBDB9-75A1-47DB-80AF-926873C206B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.GameServices", "Roshambo.GameServices\Roshambo.GameServices.csproj", "{72FFBDB9-75A1-47DB-80AF-926873C206B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.PlayerSessionActor", "Roshambo.PlayerSessionActor\Roshambo.PlayerSessionActor.csproj", "{7A0A4D36-0A46-430D-953C-01AF89C79296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roshambo.PlayerSessionActor", "Roshambo.PlayerSessionActor\Roshambo.PlayerSessionActor.csproj", "{7A0A4D36-0A46-430D-953C-01AF89C79296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roshambo.Twilio.UnitTesting", "Roshambo.Twilio.UnitTesting\Roshambo.Twilio.UnitTesting.csproj", "{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +68,14 @@ Global
 		{7A0A4D36-0A46-430D-953C-01AF89C79296}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A0A4D36-0A46-430D-953C-01AF89C79296}.Release|x64.ActiveCfg = Release|Any CPU
 		{7A0A4D36-0A46-430D-953C-01AF89C79296}.Release|x64.Build.0 = Release|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Debug|x64.Build.0 = Debug|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Release|x64.ActiveCfg = Release|Any CPU
+		{E55E11B0-9A8D-42F1-84C6-C7C35E942F36}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
