@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Roshambo.Common.Models;
 using ServiceFabric.Mocks;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Roshambo.Twilio.UnitTesting
@@ -61,7 +61,7 @@ namespace Roshambo.Twilio.UnitTesting
 
             var result = await target.GetTextMessageBodyAsync(
                 playerMove, computerMove, TurnWinner.Human,
-                new PlayerTurnResult { NextMoveReady = true });
+                new PlayerTurnResult { NextMoveReady = true, CurrentStreak = 1 });
             Assert.IsTrue(result.StartsWith($"{playerMove} beat {computerMove}."));
         }
 
@@ -75,7 +75,7 @@ namespace Roshambo.Twilio.UnitTesting
 
             var result = await target.GetTextMessageBodyAsync(
                 playerMove, computerMove, TurnWinner.Computer,
-                new PlayerTurnResult { NextMoveReady = true });
+                new PlayerTurnResult { NextMoveReady = true, CurrentStreak = 1 });
             Assert.IsTrue(result.StartsWith($"{playerMove} lost to {computerMove}."));
         }
 
@@ -107,27 +107,67 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
-        public Task GetTextMessageBodyAsync_Win_StreakIncrease()
+        public async Task GetTextMessageBodyAsync_Win_StreakIncrease()
         {
-            throw new NotImplementedException();
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Rock, GameOption.Paper, TurnWinner.Human,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 6, CurrentStreak = 7 });
+            Assert.IsTrue(result.Contains("Your streak increased to 7."));
         }
 
         [TestMethod]
-        public Task GetTextMessageBodyAsync_Win_StreakReset()
+        public async Task GetTextMessageBodyAsync_Win_StreakReset()
         {
-            throw new NotImplementedException();
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Rock, GameOption.Paper, TurnWinner.Human,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 7, CurrentStreak = 1 });
+            Assert.IsTrue(result.Contains("Your previous streak was 7."));
+        }
+
+        [TestMethod, ExpectedException(typeof(InvalidConstraintException))]
+        public async Task GetTextMessageBodyAsync_Win_StreakMaintained()
+        {
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            await target.GetTextMessageBodyAsync(
+                GameOption.Scissor, GameOption.Paper, TurnWinner.Human,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 7, CurrentStreak = 7 });
         }
 
         [TestMethod]
-        public Task GetTextMessageBodyAsync_Lose_StreakIncrease()
+        public async Task GetTextMessageBodyAsync_Lose_StreakIncrease()
         {
-            throw new NotImplementedException();
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Rock, GameOption.Paper, TurnWinner.Computer,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 6, CurrentStreak = 7 });
+            Assert.IsTrue(result.Contains("Your streak increased to 7."));
         }
 
         [TestMethod]
-        public Task GetTextMessageBodyAsync_Lose_StreakReset()
+        public async Task GetTextMessageBodyAsync_Lose_StreakReset()
         {
-            throw new NotImplementedException();
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Rock, GameOption.Paper, TurnWinner.Computer,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 7, CurrentStreak = 1 });
+            Assert.IsTrue(result.Contains("Your previous streak was 7."));
+        }
+
+        [TestMethod, ExpectedException(typeof(InvalidConstraintException))]
+        public async Task GetTextMessageBodyAsync_Lose_StreakMaintained()
+        {
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            await target.GetTextMessageBodyAsync(
+                GameOption.Scissor, GameOption.Paper, TurnWinner.Computer,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 7, CurrentStreak = 7 });
         }
 
         [TestMethod]
@@ -137,8 +177,32 @@ namespace Roshambo.Twilio.UnitTesting
 
             var result = await target.GetTextMessageBodyAsync(
                 GameOption.Scissor, GameOption.Paper, TurnWinner.Tie,
-                new PlayerTurnResult { NextMoveReady = true, CurrentStreak = 7 });
-            Assert.AreEqual("Tie! Your streak remains at 7.", result);
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 7, CurrentStreak = 7 });
+            Assert.IsTrue(result.Contains("Your current streak is 7."), result);
+        }
+
+        [TestMethod]
+        public async Task GetTextMessageBodyAsync_Streak_InvalidState()
+        {
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var exception = await Assert.ThrowsExceptionAsync<InvalidConstraintException>(
+                async () => await target.GetTextMessageBodyAsync(
+                GameOption.Scissor, GameOption.Paper, TurnWinner.Tie,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 2, CurrentStreak = 0 }));
+            Assert.AreEqual("Streak did not update in a consistent manner.", exception.Message);
+        }
+
+        [TestMethod]
+        public async Task GetTextMessageBodyAsync_NextMoveReady()
+        {
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Paper, GameOption.Paper, TurnWinner.Tie,
+                new PlayerTurnResult { NextMoveReady = true });
+
+            Assert.IsTrue(result.EndsWith("Ready for your next move."));
         }
 
         [TestMethod]

@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
@@ -9,6 +8,7 @@ using Roshambo.Common;
 using Roshambo.Common.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Fabric;
 using System.IO;
 using System.Linq;
@@ -76,16 +76,26 @@ namespace Roshambo.Twilio
             if (!playerTurnResult.NextMoveReady)
                 throw new ValidationException("Next move must be ready.");
 
-            return Task.FromResult(winner switch
+            var winSentence = winner switch
             {
                 TurnWinner.Human => $"{playerMove} beat {computerMove}.",
                 TurnWinner.Computer => $"{playerMove} lost to {computerMove}.",
-                TurnWinner.Tie => $"Tie! Your streak remains at {playerTurnResult.CurrentStreak}.",
+                TurnWinner.Tie => $"Tie!",
                 _ => throw new ValidationException(
                     $"Input {winner} not recognized.")
-            });
+            };
 
-            // TODO: Update response text
+            var streakSentence = (winner, playerTurnResult) switch
+            {
+                (TurnWinner.Tie, _) when playerTurnResult.CurrentStreak == playerTurnResult.PreviousStreak
+                    => $"Your current streak is {playerTurnResult.CurrentStreak}.",
+                (_, { CurrentStreak: 1 }) => $"Your previous streak was {playerTurnResult.PreviousStreak}.",
+                (_, _) when playerTurnResult.CurrentStreak > playerTurnResult.PreviousStreak
+                    => $"Your streak increased to {playerTurnResult.CurrentStreak}.",
+                _ => throw new InvalidConstraintException("Streak did not update in a consistent manner.")
+            };
+
+            return Task.FromResult($"{winSentence} {streakSentence} Ready for your next move.");
         }
     }
 }
