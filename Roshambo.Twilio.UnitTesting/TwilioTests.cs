@@ -107,7 +107,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
-        public async Task GetTextMessageBodyAsync_Win_StreakIncrease()
+        public async Task GetTextMessageBodyAsync_Winner_Human_StreakIncrease()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 
@@ -118,7 +118,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
-        public async Task GetTextMessageBodyAsync_Win_StreakReset()
+        public async Task GetTextMessageBodyAsync_Winner_Human_StreakReset()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 
@@ -129,7 +129,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod, ExpectedException(typeof(InvalidConstraintException))]
-        public async Task GetTextMessageBodyAsync_Win_StreakMaintained()
+        public async Task GetTextMessageBodyAsync_Winner_Human_StreakMaintained()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 
@@ -139,7 +139,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
-        public async Task GetTextMessageBodyAsync_Lose_StreakIncrease()
+        public async Task GetTextMessageBodyAsync_Winner_Computer_StreakIncrease()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 
@@ -150,7 +150,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
-        public async Task GetTextMessageBodyAsync_Lose_StreakReset()
+        public async Task GetTextMessageBodyAsync_Winner_Computer_StreakReset()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 
@@ -161,7 +161,7 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod, ExpectedException(typeof(InvalidConstraintException))]
-        public async Task GetTextMessageBodyAsync_Lose_StreakMaintained()
+        public async Task GetTextMessageBodyAsync_Winner_Computer_StreakMaintained()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
 

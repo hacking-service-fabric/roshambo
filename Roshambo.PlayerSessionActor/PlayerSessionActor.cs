@@ -21,7 +21,7 @@ namespace Roshambo.PlayerSessionActor
     ///  - None: State is kept in memory only and not replicated.
     /// </remarks>
     [StatePersistence(StatePersistence.Persisted)]
-    internal class PlayerSessionActor : Actor, IPlayerSession
+    public class PlayerSessionActor : Actor, IPlayerSession
     {
         private const string NextComputerMoveStateName = "nextComputerMove";
 
