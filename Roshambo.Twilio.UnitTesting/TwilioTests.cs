@@ -182,6 +182,17 @@ namespace Roshambo.Twilio.UnitTesting
         }
 
         [TestMethod]
+        public async Task GetTextMessageBodyAsync_Tie_StreakMaintained_Zero()
+        {
+            var target = new Twilio(MockStatelessServiceContextFactory.Default);
+
+            var result = await target.GetTextMessageBodyAsync(
+                GameOption.Scissor, GameOption.Paper, TurnWinner.Tie,
+                new PlayerTurnResult { NextMoveReady = true, PreviousStreak = 0, CurrentStreak = 0 });
+            Assert.IsFalse(result.Contains("Your current streak is 0."), result);
+        }
+
+        [TestMethod]
         public async Task GetTextMessageBodyAsync_Streak_InvalidState()
         {
             var target = new Twilio(MockStatelessServiceContextFactory.Default);
