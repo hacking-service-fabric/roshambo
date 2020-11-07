@@ -80,14 +80,9 @@ namespace Roshambo.PlayerSessionActor
             {
                 result.PreviousStreak = await StateManager.GetStateAsync<int>(
                     PreviousStreakStateName);
-                result.StreakReset = previousWinner.Value != turnWinner;
-            }
-            else
-            {
-                result.StreakReset = true;
             }
 
-            if (result.StreakReset)
+            if (previousWinner.Value != turnWinner)
             {
                 result.CurrentStreak = 1;
             }

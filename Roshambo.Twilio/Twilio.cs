@@ -13,6 +13,8 @@ using System.Fabric;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Roshambo.Twilio.Implementations;
 
 namespace Roshambo.Twilio
 {
@@ -21,9 +23,14 @@ namespace Roshambo.Twilio
     /// </summary>
     public sealed class Twilio : StatelessService, ITranslationService
     {
-        public Twilio(StatelessServiceContext context)
+        private readonly IEnumerable<IResponseSentenceProvider> _sentenceProviders;
+
+        public Twilio(StatelessServiceContext context,
+            IEnumerable<IResponseSentenceProvider> sentenceProviders)
             : base(context)
-        { }
+        {
+            _sentenceProviders = sentenceProviders;
+        }
 
         /// <summary>
         /// Optional override to create listeners (like tcp, http) for this service instance.
@@ -46,7 +53,18 @@ namespace Roshambo.Twilio
                                             .AddEnvironmentVariables("ROSHAMBO:")
                                             .Build())
                                         .ConfigureServices(
-                                            services => services.AddStatelessService(serviceContext))
+                                            services =>
+                                            {
+                                                services.AddStatelessService(serviceContext);
+
+                                                services
+                                                    .AddSingleton<IResponseSentenceProvider,
+                                                        ResponseResultSentenceProvider>()
+                                                    .AddSingleton<IResponseSentenceProvider,
+                                                        ResponseStreakSentenceProvider>()
+                                                    .AddSingleton<IResponseSentenceProvider,
+                                                        ResponseNextMoveSentenceProvider>();
+                                            })
                                         .UseContentRoot(Directory.GetCurrentDirectory())
                                         .UseStartup<Startup>()
                                         .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
@@ -73,29 +91,10 @@ namespace Roshambo.Twilio
             GameOption playerMove, GameOption computerMove,
             TurnWinner winner, PlayerTurnResult playerTurnResult)
         {
-            if (!playerTurnResult.NextMoveReady)
-                throw new ValidationException("Next move must be ready.");
-
-            var winSentence = winner switch
-            {
-                TurnWinner.Human => $"{playerMove} beat {computerMove}.",
-                TurnWinner.Computer => $"{playerMove} lost to {computerMove}.",
-                TurnWinner.Tie => $"Tie!",
-                _ => throw new ValidationException(
-                    $"Input {winner} not recognized.")
-            };
-
-            var streakSentence = (winner, playerTurnResult) switch
-            {
-                (TurnWinner.Tie, _) when playerTurnResult.CurrentStreak == playerTurnResult.PreviousStreak
-                    => $"Your current streak is {playerTurnResult.CurrentStreak}.",
-                (_, { CurrentStreak: 1 }) => $"Your previous streak was {playerTurnResult.PreviousStreak}.",
-                (_, _) when playerTurnResult.CurrentStreak > playerTurnResult.PreviousStreak
-                    => $"Your streak increased to {playerTurnResult.CurrentStreak}.",
-                _ => throw new InvalidConstraintException("Streak did not update in a consistent manner.")
-            };
-
-            return Task.FromResult($"{winSentence} {streakSentence} Ready for your next move.");
+            return Task.FromResult(string.Join(' ', _sentenceProviders
+                .Select(p => p.GetResponseSentence(
+                    playerMove, computerMove, winner, playerTurnResult))
+                .Where(s => !string.IsNullOrEmpty(s))));
         }
     }
 }

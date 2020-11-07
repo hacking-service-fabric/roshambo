@@ -25,7 +25,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
         {
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Human);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(0, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -37,7 +36,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
             await SetStateAsync(TurnWinner.Human, 4);
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Human);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(5, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -50,14 +48,12 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
 
             var tieResult = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(tieResult.StreakReset);
             Assert.AreEqual(4, tieResult.CurrentStreak);
             Assert.AreEqual(4, tieResult.PreviousStreak);
             Assert.IsTrue(tieResult.NextMoveReady);
 
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Human);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(5, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -69,7 +65,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
             await SetStateAsync(TurnWinner.Computer, 4);
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Human);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -82,14 +77,12 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
 
             var tieResult = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(tieResult.StreakReset);
             Assert.AreEqual(4, tieResult.CurrentStreak);
             Assert.AreEqual(4, tieResult.PreviousStreak);
             Assert.IsTrue(tieResult.NextMoveReady);
 
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Human);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -100,7 +93,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
         {
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Computer);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(0, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -112,7 +104,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
             await SetStateAsync(TurnWinner.Computer, 4);
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Computer);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(5, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -125,14 +116,12 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
 
             var tieResult = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(tieResult.StreakReset);
             Assert.AreEqual(4, tieResult.CurrentStreak);
             Assert.AreEqual(4, tieResult.PreviousStreak);
             Assert.IsTrue(tieResult.NextMoveReady);
 
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Computer);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(5, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -144,7 +133,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
             await SetStateAsync(TurnWinner.Human, 4);
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Computer);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -157,14 +145,12 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
 
             var tieResult = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(tieResult.StreakReset);
             Assert.AreEqual(4, tieResult.CurrentStreak);
             Assert.AreEqual(4, tieResult.PreviousStreak);
             Assert.IsTrue(tieResult.NextMoveReady);
 
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Computer);
 
-            Assert.IsTrue(result.StreakReset);
             Assert.AreEqual(1, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -176,7 +162,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
             await SetStateAsync(TurnWinner.Human, 4);
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(4, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);
@@ -187,7 +172,6 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
         {
             var result = await _target.StoreTurnOutcomeAsync(TurnWinner.Tie);
 
-            Assert.IsFalse(result.StreakReset);
             Assert.AreEqual(0, result.CurrentStreak);
             Assert.AreEqual(0, result.PreviousStreak);
             Assert.IsTrue(result.NextMoveReady);

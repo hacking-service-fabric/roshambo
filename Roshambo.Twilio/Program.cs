@@ -21,7 +21,7 @@ namespace Roshambo.Twilio
                 // an instance of the class is created in this host process.
 
                 await ServiceRuntime.RegisterServiceAsync("Roshambo.TwilioType",
-                    context => new Twilio(context));
+                    context => new Twilio(context, null)); // TODO: Implement
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Twilio).Name);
 

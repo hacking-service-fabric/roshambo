@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Roshambo.Common;
+using Roshambo.Twilio.Implementations;
 using Twilio.Security;
 
 namespace Roshambo.Twilio
