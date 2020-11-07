@@ -3,6 +3,9 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Roshambo.Common;
+using Roshambo.Twilio.Implementations;
 
 namespace Roshambo.Twilio
 {
@@ -13,6 +16,18 @@ namespace Roshambo.Twilio
         /// </summary>
         private static async Task Main()
         {
+            var services = new ServiceCollection();
+
+            services
+                .AddSingleton<IResponseSentenceProvider,
+                    ResponseResultSentenceProvider>()
+                .AddSingleton<IResponseSentenceProvider,
+                    ResponseStreakSentenceProvider>()
+                .AddSingleton<IResponseSentenceProvider,
+                    ResponseNextMoveSentenceProvider>();
+
+            services.AddSingleton<Twilio>();
+
             try
             {
                 // The ServiceManifest.XML file defines one or more service type names.
@@ -21,7 +36,12 @@ namespace Roshambo.Twilio
                 // an instance of the class is created in this host process.
 
                 await ServiceRuntime.RegisterServiceAsync("Roshambo.TwilioType",
-                    context => new Twilio(context, null)); // TODO: Implement
+                    context =>
+                    {
+                        services.AddStatelessService(context);
+                        return services.BuildServiceProvider()
+                            .GetRequiredService<Twilio>();
+                    });
 
                 ServiceEventSource.Current.ServiceTypeRegistered(Process.GetCurrentProcess().Id, typeof(Twilio).Name);
 

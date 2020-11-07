@@ -52,19 +52,7 @@ namespace Roshambo.Twilio
                                         .UseConfiguration(new ConfigurationBuilder()
                                             .AddEnvironmentVariables("ROSHAMBO:")
                                             .Build())
-                                        .ConfigureServices(
-                                            services =>
-                                            {
-                                                services.AddStatelessService(serviceContext);
-
-                                                services
-                                                    .AddSingleton<IResponseSentenceProvider,
-                                                        ResponseResultSentenceProvider>()
-                                                    .AddSingleton<IResponseSentenceProvider,
-                                                        ResponseStreakSentenceProvider>()
-                                                    .AddSingleton<IResponseSentenceProvider,
-                                                        ResponseNextMoveSentenceProvider>();
-                                            })
+                                        .ConfigureServices(services => services.AddStatelessService(serviceContext))
                                         .UseContentRoot(Directory.GetCurrentDirectory())
                                         .UseStartup<Startup>()
                                         .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)

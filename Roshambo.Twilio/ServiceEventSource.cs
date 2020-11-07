@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Fabric;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace Roshambo.Twilio
 {
+    [ExcludeFromCodeCoverage]
     [EventSource(Name = "MyCompany-Roshambo.App-Roshambo.Twilio")]
     internal sealed class ServiceEventSource : EventSource
     {
