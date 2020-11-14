@@ -17,6 +17,8 @@ namespace Roshambo.GameServices
     /// </summary>
     internal sealed class GameServices : StatelessService, IGameOptionService, IGameService
     {
+        private static readonly Random _randomGenerator = new Random();
+
         public GameServices(StatelessServiceContext context)
             : base(context)
         { }
@@ -53,14 +55,20 @@ namespace Roshambo.GameServices
 
         public Task<GameOption> GetRandomOptionAsync()
         {
-            return Task.FromResult(GameOption.Paper);
-            // TODO: Implement
+            var randomNumber = _randomGenerator.Next(0, 3);
+            return Task.FromResult((GameOption)randomNumber);
         }
 
         public Task<TurnWinner> JudgeTurnAsync(GameOption playerMove, GameOption computerMove)
         {
-            return Task.FromResult(TurnWinner.Human);
-            // TODO: Implement
+            if (playerMove == computerMove)
+                return Task.FromResult(TurnWinner.Tie);
+
+            var playerWon = (playerMove == GameOption.Rock && computerMove == GameOption.Scissor)
+               || (playerMove == GameOption.Paper && computerMove == GameOption.Rock)
+               || (playerMove == GameOption.Scissor && computerMove == GameOption.Paper);
+
+            return Task.FromResult(playerWon ? TurnWinner.Human : TurnWinner.Computer);
         }
     }
 }
