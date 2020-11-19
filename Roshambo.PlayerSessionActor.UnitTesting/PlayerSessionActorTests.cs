@@ -38,7 +38,7 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
 
             Assert.AreEqual(5, result.CurrentStreak);
             Assert.AreEqual(4, result.PreviousStreak);
-            Assert.IsFalse(result.NextMoveReady);
+            Assert.IsTrue(result.NextMoveReady);
         }
 
         [TestMethod]
