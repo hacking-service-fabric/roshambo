@@ -15,8 +15,7 @@ namespace Roshambo.PlayerSessionActor.UnitTesting
         [TestInitialize]
         public void Initialize()
         {
-            var svc = MockActorServiceFactory.CreateActorServiceForActor<PlayerSessionActor>(
-                (service, actorId) => null);
+            var svc = MockActorServiceFactory.CreateActorServiceForActor<PlayerSessionActor>();
             _target = new PlayerSessionActor(svc, new ActorId(Guid.NewGuid()));
         }
 
