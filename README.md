@@ -1,3 +1,5 @@
+[![Build status](https://dev.azure.com/hacking-service-fabric/roshambo/_apis/build/status/roshambo-Azure%20Service%20Fabric%20application-CI)](https://dev.azure.com/hacking-service-fabric/roshambo/_build/latest?definitionId=1)
+
 # Architecture
 
 ```
